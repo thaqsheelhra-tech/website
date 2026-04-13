@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>HR assist — The Explainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter+Tight:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0e0d0b;
+    --paper:#f3efe6;
+    --paper-2:#ebe5d7;
+    --accent:#c8542b;
+    --muted:#6b6356;
+    --rule:#1a1915;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:"Inter Tight",sans-serif;-webkit-font-smoothing:antialiased}
+  .serif{font-family:"Fraunces",serif;font-weight:400;font-style:normal}
+  .mono{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+
+  /* stage */
+  .stage{position:fixed;inset:0;overflow:hidden}
+  .grain{position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.12;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='.6'/></svg>")}
+  .vignette{position:fixed;inset:0;pointer-events:none;z-index:40;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.55) 100%)}
+
+  /* scenes */
+  .scene{position:absolute;inset:0;opacity:0;transition:opacity 1.1s ease;display:flex;align-items:center;justify-content:center;padding:6vmin}
+  .scene.active{opacity:1}
+  .scene .bg{position:absolute;inset:0;z-index:0}
+  .scene .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,13,11,.2) 0%,rgba(14,13,11,.55) 60%,rgba(14,13,11,.92) 100%)}
+  .scene .bg img{width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(.9);transform:scale(1.08)}
+  .scene.active .bg img{animation:kenburns 22s ease-out forwards}
+  @keyframes kenburns{from{transform:scale(1.08) translate(0,0)}to{transform:scale(1.24) translate(-2.5%,-2%)}}
+  .scene .content{position:relative;z-index:2;max-width:1100px;width:100%}
+
+  /* scene-specific layouts */
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:28px;display:flex;align-items:center;gap:14px}
+  .eyebrow .bar{width:40px;height:1px;background:var(--accent)}
+  h1.big{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(48px,7.2vw,112px);line-height:.96;letter-spacing:-.02em}
+  h1.big em{font-style:italic;color:var(--accent);font-weight:300}
+  h1.big .under{position:relative;display:inline-block}
+  h1.big .under::after{content:"";position:absolute;left:0;right:0;bottom:.08em;height:.1em;background:var(--accent);opacity:.4}
+  p.lede{font-family:"Fraunces",serif;font-size:clamp(20px,2vw,28px);line-height:1.45;max-width:640px;margin-top:28px;color:#d9d2c2;font-weight:300}
+
+  /* title card */
+  .title-card{text-align:left}
+  .title-card .mono.top{color:var(--muted);margin-bottom:40px}
+  .title-card .meta{display:flex;gap:60px;margin-top:50px;flex-wrap:wrap}
+  .title-card .meta div{min-width:0}
+  .title-card .meta .k{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .title-card .meta .v{font-family:"Fraunces",serif;font-size:20px}
+
+  /* modules grid */
+  .modules-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(243,239,230,.15);border:1px solid rgba(243,239,230,.15);margin-top:40px}
+  .mod{background:rgba(14,13,11,.7);padding:24px 22px;min-height:120px;position:relative;opacity:0;transform:translateY(10px)}
+  .scene.active .mod{animation:fadeUp .6s ease forwards}
+  .scene.active .mod:nth-child(1){animation-delay:.2s}
+  .scene.active .mod:nth-child(2){animation-delay:.3s}
+  .scene.active .mod:nth-child(3){animation-delay:.4s}
+  .scene.active .mod:nth-child(4){animation-delay:.5s}
+  .scene.active .mod:nth-child(5){animation-delay:.6s}
+  .scene.active .mod:nth-child(6){animation-delay:.7s}
+  .scene.active .mod:nth-child(7){animation-delay:.8s}
+  .scene.active .mod:nth-child(8){animation-delay:.9s}
+  .scene.active .mod:nth-child(9){animation-delay:1s}
+  .scene.active .mod:nth-child(10){animation-delay:1.1s}
+  .scene.active .mod:nth-child(11){animation-delay:1.2s}
+  @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+  .mod .n{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--accent);letter-spacing:.15em}
+  .mod .t{font-family:"Fraunces",serif;font-size:22px;margin-top:10px;line-height:1.15}
+  .mod .d{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.4}
+
+  /* stat / architecture scene */
+  .arch{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+  .arch .left h2{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(40px,5vw,72px);line-height:1;letter-spacing:-.02em}
+  .arch .left h2 em{font-style:italic;color:var(--accent)}
+  .arch .stack{display:flex;flex-direction:column;gap:12px}
+  .arch .row{border:1px solid rgba(243,239,230,.18);padding:18px 22px;display:flex;justify-content:space-between;align-items:center;background:rgba(14,13,11,.5)}
+  .arch .row .lab{font-family:"Fraunces",serif;font-size:20px}
+  .arch .row .val{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--accent);letter-spacing:.1em}
+
+  /* closer */
+  .closer{text-align:center}
+  .closer h2{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(56px,9vw,140px);line-height:.95;letter-spacing:-.03em}
+  .closer h2 em{font-style:italic;color:var(--accent)}
+  .closer .sig{margin-top:50px;display:flex;justify-content:center;gap:40px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+
+  /* caption / narration bar */
+  .caption{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:30px 6vmin 50px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.85));pointer-events:none}
+  .caption .inner{max-width:900px;margin:0 auto;text-align:center}
+  .caption .line{font-family:"Fraunces",serif;font-size:clamp(18px,1.8vw,26px);line-height:1.45;color:#f3efe6;opacity:0;transition:opacity .5s;font-weight:300}
+  .caption .line.show{opacity:1}
+
+  /* header chrome */
+  .chrome{position:fixed;top:0;left:0;right:0;z-index:30;padding:26px 6vmin;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+  .brand{display:flex;align-items:center;gap:10px;font-family:"Fraunces",serif;font-size:16px}
+  .brand .dot{width:10px;height:10px;background:var(--accent);border-radius:50%}
+  .chapter{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+  /* progress */
+  .progress{position:fixed;top:0;left:0;right:0;height:2px;background:rgba(243,239,230,.1);z-index:35}
+  .progress .fill{height:100%;background:var(--accent);width:0;transition:width .3s linear}
+
+  /* controls */
+  .controls{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:60;display:flex;gap:10px;pointer-events:auto}
+  .controls button{background:rgba(14,13,11,.7);border:1px solid rgba(243,239,230,.2);color:var(--paper);padding:10px 18px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(10px);transition:all .2s}
+  .controls button:hover{background:var(--accent);border-color:var(--accent)}
+
+  /* intro overlay */
+  .intro{position:fixed;inset:0;z-index:100;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:30px;transition:opacity .8s}
+  .intro.hidden{opacity:0;pointer-events:none}
+  .intro h1{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(40px,6vw,80px);line-height:1;text-align:center;letter-spacing:-.02em}
+  .intro h1 em{font-style:italic;color:var(--accent)}
+  .intro .sub{color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;text-align:center;max-width:500px;line-height:1.6}
+  .intro button{background:var(--accent);border:none;color:var(--ink);padding:18px 36px;font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:transform .2s}
+  .intro button:hover{transform:translateY(-2px)}
+  .intro .opts{display:flex;gap:10px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+  .intro .opts label{display:flex;gap:6px;align-items:center;cursor:pointer}
+
+  @media(max-width:860px){
+    .modules-grid{grid-template-columns:repeat(2,1fr)}
+    .arch{grid-template-columns:1fr;gap:30px}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+<div class="vignette"></div>
+
+<div class="progress"><div class="fill" id="progFill"></div></div>
+
+<div class="chrome">
+  <div class="brand"><span class="dot"></span>HR assist</div>
+  <div class="chapter" id="chapterLabel">Ch. 00 — Prologue</div>
+</div>
+
+<div class="stage" id="stage">
+
+  <!-- Scene 1: Title -->
+  <section class="scene" data-dur="7000">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1800&q=80" alt=""></div>
+    <div class="content title-card">
+      <div class="eyebrow"><span class="bar"></span>Ch. 01 — A new kind of people platform</div>
+      <h1 class="big">Run your <em>entire</em><br>people operation<br>on <span class="under">one calm</span> platform.</h1>
+      <div class="meta">
+        <div><div class="k">Modules</div><div class="v">11 integrated</div></div>
+        <div><div class="k">Stack</div><div class="v">Next.js · Supabase</div></div>
+        <div><div class="k">Deployment</div><div class="v">Free tier ready</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 2: The problem -->
+  <section class="scene" data-dur="7500">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=80" alt=""></div>
+    <div class="content">
+      <div class="eyebrow"><span class="bar"></span>Ch. 02 — The problem</div>
+      <h1 class="big">HR runs on <em>seventeen</em><br>spreadsheets <br>and a <span class="under">prayer.</span></h1>
+      <p class="lede">Attendance in one tab. Payroll in another. Leave requests in a group chat. Candidates in an inbox. Exit formalities on paper. Everyone is busy, but nothing talks to anything.</p>
+    </div>
+  </section>
+
+  <!-- Scene 3: The suite -->
+  <section class="scene" data-dur="11000">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1800&q=80" alt=""></div>
+    <div class="content">
+      <div class="eyebrow"><span class="bar"></span>Ch. 03 — Eleven modules, one surface</div>
+      <h1 class="big" style="font-size:clamp(36px,4.8vw,72px)">Everything HR does, <em>under one roof.</em></h1>
+      <div class="modules-grid">
+        <div class="mod"><div class="n">01</div><div class="t">Dashboard</div><div class="d">Headcount, approvals, joiners</div></div>
+        <div class="mod"><div class="n">02</div><div class="t">Employees</div><div class="d">Profiles, org chart, documents</div></div>
+        <div class="mod"><div class="n">03</div><div class="t">Attendance</div><div class="d">Check-in, hours, monthly view</div></div>
+        <div class="mod"><div class="n">04</div><div class="t">Leave</div><div class="d">Apply, approve, balances</div></div>
+        <div class="mod"><div class="n">05</div><div class="t">Payroll</div><div class="d">TDS, PF, ESIC, payslips</div></div>
+        <div class="mod"><div class="n">06</div><div class="t">Recruitment</div><div class="d">Pipelines, interviews, offers</div></div>
+        <div class="mod"><div class="n">07</div><div class="t">Expenses</div><div class="d">Claims, mileage, approvals</div></div>
+        <div class="mod"><div class="n">08</div><div class="t">Exit</div><div class="d">Resignations, clearances</div></div>
+        <div class="mod"><div class="n">09</div><div class="t">Policies</div><div class="d">PDFs, acknowledgements</div></div>
+        <div class="mod"><div class="n">10</div><div class="t">Reports</div><div class="d">Attrition, trends, analytics</div></div>
+        <div class="mod"><div class="n">11</div><div class="t">Roles</div><div class="d">Granular permissions</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 4: Architecture -->
+  <section class="scene" data-dur="8500">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=80" alt=""></div>
+    <div class="content">
+      <div class="eyebrow"><span class="bar"></span>Ch. 04 — Built on calm foundations</div>
+      <div class="arch">
+        <div class="left">
+          <h2>Multi-tenant<br><em>from the first line.</em></h2>
+          <p class="lede">Every company is isolated by row-level security. No noisy neighbours. No shared schemas. Enterprise-grade posture, hosted on free tiers.</p>
+        </div>
+        <div class="stack">
+          <div class="row"><span class="lab">Next.js 14</span><span class="val">→ App Router</span></div>
+          <div class="row"><span class="lab">Supabase</span><span class="val">→ Postgres · Auth · Storage</span></div>
+          <div class="row"><span class="lab">Row-Level Security</span><span class="val">→ Tenant isolation</span></div>
+          <div class="row"><span class="lab">Vercel</span><span class="val">→ Edge deploys</span></div>
+          <div class="row"><span class="lab">TypeScript</span><span class="val">→ End-to-end</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scene 5: Close -->
+  <section class="scene" data-dur="8000">
+    <div class="bg"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1800&q=80" alt=""></div>
+    <div class="content closer">
+      <div class="eyebrow" style="justify-content:center"><span class="bar"></span>Ch. 05 — Begin<span class="bar"></span></div>
+      <h2>Focus on your <em>people.</em><br>We'll handle the <em>paperwork.</em></h2>
+      <div class="sig">
+        <span>hr-assist.app</span>
+        <span>·</span>
+        <span>book a walkthrough</span>
+        <span>·</span>
+        <span>start free</span>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="caption"><div class="inner"><div class="line" id="capLine"></div></div></div>
+
+<div class="controls">
+  <button id="pauseBtn">Pause</button>
+  <button id="muteBtn">Narration: On</button>
+  <button id="restartBtn">Restart</button>
+</div>
+
+<!-- Intro gate -->
+<div class="intro" id="intro">
+  <h1>An <em>explainer,</em><br>in five chapters.</h1>
+  <div class="sub">Auto-playing · ~42 seconds<br>Optional browser narration · press Begin to start</div>
+  <div class="opts">
+    <label><input type="checkbox" id="narrChk" checked> Enable voice narration</label>
+  </div>
+  <button id="beginBtn">▶  Begin</button>
+</div>
+
+<script>
+  // Narration script — each line knows which scene it belongs to.
+  // Video advances in lockstep with audio: a scene switches only when its
+  // first line starts, and the next scene waits for the previous scene's
+  // last line to finish speaking.
+  const narration = [
+    { scene: 0, chapter: "Ch. 01 — A new kind of people platform",
+      text: "Introducing HR assist." },
+    { scene: 0, chapter: "Ch. 01 — A new kind of people platform",
+      text: "A complete human resource platform, engineered for modern teams." },
+    { scene: 0, chapter: "Ch. 01 — A new kind of people platform",
+      text: "Eleven integrated modules. Built on Next.js and Supabase." },
+
+    { scene: 1, chapter: "Ch. 02 — The problem",
+      text: "Today, most HR operations are fragmented across disconnected tools." },
+    { scene: 1, chapter: "Ch. 02 — The problem",
+      text: "Attendance in one system. Payroll in another. Leave requests scattered across email and chat." },
+    { scene: 1, chapter: "Ch. 02 — The problem",
+      text: "The result: duplicated effort, lost data, and teams spending more time on process than on people." },
+
+    { scene: 2, chapter: "Ch. 03 — The suite",
+      text: "HR assist consolidates the entire employee lifecycle into a single platform." },
+    { scene: 2, chapter: "Ch. 03 — The suite",
+      text: "Core HR, attendance, leave, and payroll, with full India compliance, including TDS, PF, and ESIC." },
+    { scene: 2, chapter: "Ch. 03 — The suite",
+      text: "Recruitment, expenses, exit, policies, reporting, and access control. All integrated, end to end." },
+
+    { scene: 3, chapter: "Ch. 04 — Architecture",
+      text: "The platform is multi-tenant by design." },
+    { scene: 3, chapter: "Ch. 04 — Architecture",
+      text: "Each organization is fully isolated through Postgres row-level security, enforced at the database layer." },
+    { scene: 3, chapter: "Ch. 04 — Architecture",
+      text: "Enterprise-grade architecture, delivered on efficient, modern infrastructure." },
+
+    { scene: 4, chapter: "Ch. 05 — Begin",
+      text: "HR assist. One platform for your entire people operation." },
+    { scene: 4, chapter: "Ch. 05 — Begin",
+      text: "Let your team focus on what matters. We'll handle the rest." },
+    { scene: 4, chapter: "Ch. 05 — Begin",
+      text: "Learn more at hr-assist.app." }
+  ];
+
+  const scenes = document.querySelectorAll('.scene');
+  const chapterLabel = document.getElementById('chapterLabel');
+  const capLine = document.getElementById('capLine');
+  const progFill = document.getElementById('progFill');
+  const pauseBtn = document.getElementById('pauseBtn');
+  const muteBtn = document.getElementById('muteBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const intro = document.getElementById('intro');
+  const beginBtn = document.getElementById('beginBtn');
+  const narrChk = document.getElementById('narrChk');
+
+  let lineIdx = 0;
+  let paused = false;
+  let narrationOn = true;
+  let pendingTimer = null;
+  let currentScene = -1;
+
+  function pickVoice(){
+    const voices = speechSynthesis.getVoices();
+    return (
+      voices.find(v => /Google UK English Male/i.test(v.name)) ||
+      voices.find(v => /Microsoft Guy|Microsoft Davis|Microsoft Tony|Microsoft Brandon/i.test(v.name)) ||
+      voices.find(v => /Daniel.*(en[-_]GB)?/i.test(v.name)) ||
+      voices.find(v => /^Daniel$/i.test(v.name)) ||
+      voices.find(v => /Oliver|Arthur|Aaron|Fred|Alex|Rishi/i.test(v.name)) ||
+      voices.find(v => /male/i.test(v.name) && /en/i.test(v.lang)) ||
+      voices.find(v => /en[-_]GB/i.test(v.lang)) ||
+      voices.find(v => /en/i.test(v.lang))
+    );
+  }
+
+  function showCaption(text){
+    capLine.classList.remove('show');
+    setTimeout(()=>{ capLine.textContent = text; capLine.classList.add('show'); }, 180);
+  }
+
+  function switchSceneIfNeeded(targetScene){
+    if(currentScene === targetScene) return;
+    currentScene = targetScene;
+    scenes.forEach((s,j)=>s.classList.toggle('active', j===targetScene));
+    chapterLabel.textContent = narration.find(n=>n.scene===targetScene).chapter;
+  }
+
+  // Estimate a fallback duration (ms) when TTS is off — based on word count.
+  function estimateDur(text){
+    const words = text.trim().split(/\s+/).length;
+    return Math.max(2200, Math.round(words / 2.6 * 1000) + 600); // ~155 wpm + pad
+  }
+
+  function playLine(i){
+    if(i >= narration.length){
+      // Loop back
+      pendingTimer = setTimeout(()=>{ lineIdx = 0; playLine(0); }, 2000);
+      return;
+    }
+    lineIdx = i;
+    const line = narration[i];
+    switchSceneIfNeeded(line.scene);
+    showCaption(line.text);
+    progFill.style.width = ((i+1)/narration.length * 100) + '%';
+
+    const advance = () => {
+      // Small inter-line pause for breathing room
+      pendingTimer = setTimeout(()=>{ if(!paused) playLine(i+1); }, 550);
+    };
+
+    if(narrationOn && 'speechSynthesis' in window){
+      const u = new SpeechSynthesisUtterance(line.text);
+      u.rate = 0.92; u.pitch = 0.85; u.volume = 1.0;
+      const v = pickVoice(); if(v) u.voice = v;
+      u.onend = advance;
+      u.onerror = advance; // don't get stuck if TTS fails
+      speechSynthesis.speak(u);
+      // Safety net: if onend never fires (some browsers), use estimated fallback + buffer
+      pendingTimer = setTimeout(()=>{
+        if(speechSynthesis.speaking) return; // still going, let onend handle it
+      }, estimateDur(line.text) + 4000);
+    } else {
+      // No narration — drive video off estimated reading time
+      pendingTimer = setTimeout(advance, estimateDur(line.text));
+    }
+  }
+
+  function stopEverything(){
+    if(pendingTimer){ clearTimeout(pendingTimer); pendingTimer = null; }
+    if('speechSynthesis' in window) speechSynthesis.cancel();
+  }
+
+  pauseBtn.addEventListener('click', ()=>{
+    paused = !paused;
+    pauseBtn.textContent = paused ? 'Resume' : 'Pause';
+    if(paused){
+      if('speechSynthesis' in window) speechSynthesis.pause();
+      if(pendingTimer){ clearTimeout(pendingTimer); pendingTimer = null; }
+    } else {
+      if('speechSynthesis' in window && speechSynthesis.paused){
+        speechSynthesis.resume();
+      } else {
+        // resume by replaying current line
+        playLine(lineIdx);
+      }
+    }
+  });
+
+  muteBtn.addEventListener('click', ()=>{
+    narrationOn = !narrationOn;
+    muteBtn.textContent = 'Narration: ' + (narrationOn ? 'On' : 'Off');
+    stopEverything();
+    playLine(lineIdx); // restart current line with new mode
+  });
+
+  restartBtn.addEventListener('click', ()=>{
+    stopEverything();
+    currentScene = -1;
+    playLine(0);
+  });
+
+  beginBtn.addEventListener('click', ()=>{
+    narrationOn = narrChk.checked;
+    muteBtn.textContent = 'Narration: ' + (narrationOn ? 'On' : 'Off');
+    if('speechSynthesis' in window){
+      const warm = new SpeechSynthesisUtterance(' ');
+      warm.volume = 0; speechSynthesis.speak(warm);
+    }
+    intro.classList.add('hidden');
+    setTimeout(()=>{ playLine(0); }, 500);
+  });
+
+  if('speechSynthesis' in window){
+    speechSynthesis.getVoices();
+    speechSynthesis.onvoiceschanged = ()=>speechSynthesis.getVoices();
+  }
+</script>
+</body>
+</html>
