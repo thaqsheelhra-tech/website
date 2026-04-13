@@ -112,7 +112,7 @@ section{padding:120px 0}
 .mod h3 em{font-style:italic}
 .mod-list{font-size:13px;color:var(--mute);line-height:1.75;list-style:none}
 .mod-list li{padding-left:16px;position:relative}
-.mod-list li::before{content:"â€”";position:absolute;left:0;color:var(--accent)}
+.mod-list li::before{content:"-”";position:absolute;left:0;color:var(--accent)}
 .mod.feat{grid-column:span 8;background:linear-gradient(135deg,var(--navy-3),var(--navy-2));border-color:var(--accent)}
 .mod.feat h3{font-size:42px;max-width:14ch}
 @media(max-width:980px){.mod,.mod.feat{grid-column:span 12}}
