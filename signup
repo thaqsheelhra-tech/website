@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Start your workspace — HR assist</title>
+<meta name="description" content="Book a walkthrough or start your free HR assist workspace. Tell us about your team and we'll get back to you within one business day."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter+Tight:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"></span>HR assist</a>
+    <div class="nav-links">
+      <a href="index.html#analytics">Analytics</a>
+      <a href="index.html#modules">Modules</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="story.html">Story</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#">Sign in</a>
+      <a class="btn btn-primary" href="signup.html">Start free →</a>
+    </div>
+  </div>
+</nav>
+
+<main class="signup-page">
+  <div class="wrap">
+    <div class="signup-grid">
+
+      <aside class="signup-intro">
+        <div class="eyebrow">Begin</div>
+        <h1 class="serif">Let's set up<br>your <em>workspace.</em></h1>
+        <p class="lede">Tell us a little about your team. We'll create your workspace and walk you through it — usually within one business day.</p>
+
+        <ul class="signup-bullets">
+          <li>
+            <span class="bullet-num">01</span>
+            <div>
+              <strong>Quick setup</strong>
+              <p>Your workspace is ready within minutes of our reply. No long onboarding forms.</p>
+            </div>
+          </li>
+          <li>
+            <span class="bullet-num">02</span>
+            <div>
+              <strong>A real person, not a bot</strong>
+              <p>You'll hear back from one of us, by name, with answers to whatever you need.</p>
+            </div>
+          </li>
+          <li>
+            <span class="bullet-num">03</span>
+            <div>
+              <strong>No credit card, no surprises</strong>
+              <p>30 days of full Grove access. If it's not for you, just walk away.</p>
+            </div>
+          </li>
+        </ul>
+
+        <div class="signup-trust">
+          <div class="mono">▲ Trusted by growing teams</div>
+          <p>Your data stays isolated by row-level security. We never share it, sell it, or train on it.</p>
+        </div>
+      </aside>
+
+      <section class="signup-form-wrap">
+        <form id="signupForm" class="signup-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" novalidate>
+
+          <div class="form-head">
+            <div class="tag">New workspace</div>
+            <h2 class="serif">Your <em>details.</em></h2>
+          </div>
+
+          <div class="field">
+            <label for="name">Full name <span class="req">*</span></label>
+            <input id="name" name="name" type="text" required placeholder="Priya Sharma" autocomplete="name"/>
+          </div>
+
+          <div class="field">
+            <label for="email">Work email <span class="req">*</span></label>
+            <input id="email" name="email" type="email" required placeholder="priya@company.com" autocomplete="email"/>
+            <small class="hint">Please use your company email, not a personal one.</small>
+          </div>
+
+          <div class="field-row">
+            <div class="field">
+              <label for="company">Company <span class="req">*</span></label>
+              <input id="company" name="company" type="text" required placeholder="Acme Pvt Ltd" autocomplete="organization"/>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel"/>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Team size <span class="req">*</span></label>
+            <div class="radio-grid">
+              <label class="radio-card">
+                <input type="radio" name="team_size" value="1-10" required>
+                <span class="radio-label"><strong>1–10</strong><small>Just starting</small></span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="team_size" value="11-50">
+                <span class="radio-label"><strong>11–50</strong><small>Small team</small></span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="team_size" value="51-200">
+                <span class="radio-label"><strong>51–200</strong><small>Growing</small></span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="team_size" value="201-500">
+                <span class="radio-label"><strong>201–500</strong><small>Mid-market</small></span>
+              </label>
+              <label class="radio-card">
+                <input type="radio" name="team_size" value="500+">
+                <span class="radio-label"><strong>500+</strong><small>Enterprise</small></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>What are you most interested in? <small class="hint-inline">(pick any)</small></label>
+            <div class="chip-grid">
+              <label class="chip"><input type="checkbox" name="interests" value="Payroll"><span>Payroll</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Attendance &amp; leave"><span>Attendance &amp; leave</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Recruitment"><span>Recruitment</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Expenses"><span>Expenses</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Timesheets"><span>Timesheets</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="Reports &amp; analytics"><span>Reports</span></label>
+              <label class="chip"><input type="checkbox" name="interests" value="All 11 modules"><span>Everything</span></label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="message">Anything else you'd like us to know?</label>
+            <textarea id="message" name="message" rows="4" placeholder="Current HR tool you're switching from, timeline, specific questions…"></textarea>
+          </div>
+
+          <!-- Hidden fields Formspree uses for nicer emails -->
+          <input type="hidden" name="_subject" value="New HR assist signup">
+          <input type="text" name="_gotcha" style="display:none">
+
+          <div class="consent">
+            <label>
+              <input type="checkbox" name="consent" required>
+              <span>I agree to the <a href="privacy.html" class="inline">privacy policy</a> and to being contacted about HR assist.</span>
+            </label>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-submit">
+            <span class="btn-label">Send — start my workspace →</span>
+            <span class="btn-loading">Sending…</span>
+          </button>
+
+          <p class="form-footer">Prefer email? Write to us at <a class="inline" href="mailto:hello@hrassist.example">hello@hrassist.example</a></p>
+        </form>
+
+        <!-- Success state (shown after submit) -->
+        <div class="signup-success" id="signupSuccess" hidden>
+          <div class="success-mark">✓</div>
+          <h2 class="serif">Thanks — we've got it.</h2>
+          <p>We'll be in touch at the email address you provided, usually within one business day. In the meantime, feel free to poke around the <a class="inline" href="index.html#modules">modules</a> or <a class="inline" href="story.html">read our story</a>.</p>
+          <a href="index.html" class="btn btn-ghost">← Back to home</a>
+        </div>
+
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <div class="logo"><span class="logo-mark"></span>HR assist</div>
+        <p>An HRMS for teams that prefer their software the way they prefer their mornings — quiet, ordered, and entirely their own.</p>
+      </div>
+      <div><h5>Product</h5><a href="index.html#analytics">Analytics</a><a href="index.html#modules">Modules</a><a href="index.html#pricing">Pricing</a><a href="changelog.html">Changelog</a></div>
+      <div><h5>Company</h5><a href="story.html">Story</a><a href="careers.html">Careers</a><a href="press.html">Press</a><a href="contact.html">Contact</a></div>
+      <div><h5>Legal</h5><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="dpa.html">DPA</a></div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 HR assist · All rights reserved</div>
+      <div class="mono">v0.1 · built on modern cloud infra</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Intercept form submit, send via fetch so we can show an inline success state
+const form = document.getElementById('signupForm');
+const success = document.getElementById('signupSuccess');
+const btn = form.querySelector('.btn-submit');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  btn.classList.add('is-loading');
+  btn.disabled = true;
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.hidden = true;
+      success.hidden = false;
+      window.scrollTo({top: success.offsetTop - 100, behavior: 'smooth'});
+    } else {
+      const data = await res.json().catch(() => ({}));
+      alert(data.error || 'Something went wrong. Please try again or email us directly.');
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  } catch (err) {
+    alert('Network error. Please check your connection and try again.');
+    btn.classList.remove('is-loading');
+    btn.disabled = false;
+  }
+});
+</script>
+
+</body>
+</html>
