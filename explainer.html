@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"/>
+<meta name="theme-color" content="#0e0d0b"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <title>HR assist — The Explainer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -121,9 +124,91 @@
   .intro .opts{display:flex;gap:10px;align-items:center;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
   .intro .opts label{display:flex;gap:6px;align-items:center;cursor:pointer}
 
+  /* use dvh so mobile Safari's address bar doesn't clip content */
+  html,body{height:100dvh;min-height:100dvh}
+
   @media(max-width:860px){
-    .modules-grid{grid-template-columns:repeat(2,1fr)}
-    .arch{grid-template-columns:1fr;gap:30px}
+    .scene{padding:max(5vmin,env(safe-area-inset-top)) 5vmin max(12vh,env(safe-area-inset-bottom))}
+
+    /* Headlines: rebuild clamp with vw min so portrait phones get proper scale */
+    h1.big{font-size:clamp(34px,9.5vw,64px);line-height:.98}
+    p.lede{font-size:16px;margin-top:18px;line-height:1.5}
+    .eyebrow{font-size:10px;margin-bottom:18px;letter-spacing:.18em}
+
+    /* Title card meta stacks */
+    .title-card .meta{gap:22px;margin-top:28px}
+    .title-card .meta .v{font-size:16px}
+
+    /* Modules: 2 cols, tighter, smaller type */
+    .modules-grid{grid-template-columns:repeat(2,1fr);margin-top:22px}
+    .mod{padding:14px 14px;min-height:88px}
+    .mod .t{font-size:16px;margin-top:6px}
+    .mod .d{font-size:10.5px;margin-top:4px;line-height:1.35}
+    .mod .n{font-size:9px}
+    .scene:has(.modules-grid) h1.big{font-size:clamp(26px,7vw,40px)}
+
+    /* Architecture: stack, left-align, kill space-between awkwardness */
+    .arch{grid-template-columns:1fr;gap:24px}
+    .arch .left h2{font-size:clamp(32px,8.5vw,52px)}
+    .arch .row{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:4px}
+    .arch .row .lab{font-size:16px}
+    .arch .row .val{font-size:10px}
+
+    /* Closer */
+    .closer h2{font-size:clamp(40px,11vw,72px)}
+    .closer .sig{flex-wrap:wrap;gap:12px 20px;margin-top:28px;font-size:10px}
+
+    /* Chrome: smaller, tighter */
+    .chrome{padding:16px 5vmin}
+    .brand{font-size:14px}
+    .chapter{font-size:9px;letter-spacing:.15em;max-width:45vw;text-align:right}
+
+    /* Caption: lift above controls, smaller text */
+    .caption{padding:20px 5vmin calc(72px + env(safe-area-inset-bottom))}
+    .caption .line{font-size:15px;line-height:1.4}
+
+    /* Controls: thumb-friendly targets, pinned above safe area */
+    .controls{bottom:calc(16px + env(safe-area-inset-bottom));gap:8px}
+    .controls button{padding:12px 14px;font-size:10px;letter-spacing:.12em;min-height:44px}
+
+    /* Intro overlay: comfortable on portrait */
+    .intro{padding:32px 24px;gap:22px}
+    .intro h1{font-size:clamp(32px,9vw,52px)}
+    .intro .sub{font-size:10px;letter-spacing:.15em}
+    .intro button{padding:16px 28px;min-height:52px;width:100%;max-width:280px}
+    .intro .opts{font-size:9px;text-align:center}
+
+    /* Kill expensive effects for GPU-poor devices */
+    .grain{opacity:.08}
+  }
+
+  /* Very small phones (iPhone SE etc.) */
+  @media(max-width:380px){
+    h1.big{font-size:clamp(28px,8.8vw,48px)}
+    .modules-grid{grid-template-columns:1fr}
+    .mod{min-height:72px}
+    .title-card .meta{flex-direction:column;gap:14px}
+  }
+
+  /* Landscape phones — short height, wide */
+  @media(max-height:500px) and (orientation:landscape){
+    .scene{padding:4vmin 5vmin 10vh}
+    h1.big{font-size:clamp(28px,5.5vw,48px)}
+    .chrome{padding:10px 3vmin}
+    .caption{padding:10px 5vmin 56px}
+    .caption .line{font-size:13px}
+    .controls{bottom:8px}
+    .modules-grid{grid-template-columns:repeat(4,1fr)}
+    .mod{min-height:64px;padding:10px}
+    .mod .t{font-size:13px}
+    .mod .d{display:none}
+  }
+
+  /* Respect reduced-motion */
+  @media(prefers-reduced-motion:reduce){
+    .scene.active .bg img{animation:none}
+    .scene.active .mod{animation:none;opacity:1;transform:none}
+    .scene{transition:opacity .3s ease}
   }
 </style>
 </head>
@@ -143,7 +228,7 @@
 
   <!-- Scene 1: Title -->
   <section class="scene" data-dur="7000">
-    <div class="bg"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1800&q=80" alt=""></div>
+    <div class="bg"><img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1400&q=75&auto=format" alt=""></div>
     <div class="content title-card">
       <div class="eyebrow"><span class="bar"></span>Ch. 01 — A new kind of people platform</div>
       <h1 class="big">Run your <em>entire</em><br>people operation<br>on <span class="under">one calm</span> platform.</h1>
@@ -157,7 +242,7 @@
 
   <!-- Scene 2: The problem -->
   <section class="scene" data-dur="7500">
-    <div class="bg"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1800&q=80" alt=""></div>
+    <div class="bg"><img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1400&q=75&auto=format" alt=""></div>
     <div class="content">
       <div class="eyebrow"><span class="bar"></span>Ch. 02 — The problem</div>
       <h1 class="big">HR runs on <em>seventeen</em><br>spreadsheets <br>and a <span class="under">prayer.</span></h1>
@@ -167,7 +252,7 @@
 
   <!-- Scene 3: The suite -->
   <section class="scene" data-dur="11000">
-    <div class="bg"><img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1800&q=80" alt=""></div>
+    <div class="bg"><img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1400&q=75&auto=format" alt=""></div>
     <div class="content">
       <div class="eyebrow"><span class="bar"></span>Ch. 03 — Eleven modules, one surface</div>
       <h1 class="big" style="font-size:clamp(36px,4.8vw,72px)">Everything HR does, <em>under one roof.</em></h1>
@@ -189,7 +274,7 @@
 
   <!-- Scene 4: Architecture -->
   <section class="scene" data-dur="8500">
-    <div class="bg"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1800&q=80" alt=""></div>
+    <div class="bg"><img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&q=75&auto=format" alt=""></div>
     <div class="content">
       <div class="eyebrow"><span class="bar"></span>Ch. 04 — Built on calm foundations</div>
       <div class="arch">
@@ -210,7 +295,7 @@
 
   <!-- Scene 5: Close -->
   <section class="scene" data-dur="8000">
-    <div class="bg"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1800&q=80" alt=""></div>
+    <div class="bg"><img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1400&q=75&auto=format" alt=""></div>
     <div class="content closer">
       <div class="eyebrow" style="justify-content:center"><span class="bar"></span>Ch. 05 — Begin<span class="bar"></span></div>
       <h2>Focus on your <em>people.</em><br>We'll handle the <em>paperwork.</em></h2>
@@ -417,6 +502,13 @@
   if('speechSynthesis' in window){
     speechSynthesis.getVoices();
     speechSynthesis.onvoiceschanged = ()=>speechSynthesis.getVoices();
+    // Mobile Safari TTS keep-alive: prevents utterances >15s from cutting off
+    setInterval(()=>{
+      if(speechSynthesis.speaking && !paused){
+        speechSynthesis.pause();
+        speechSynthesis.resume();
+      }
+    }, 5000);
   }
 </script>
 </body>
