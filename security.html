@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Security — HR assist</title>
+<meta name="description" content="How HR assist protects your data — architecture, encryption, compliance."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter+Tight:wght@300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="logo"><span class="logo-mark"></span>HR assist</a>
+    <div class="nav-links">
+      <a href="index.html#analytics">Analytics</a>
+      <a href="index.html#modules">Modules</a>
+      <a href="index.html#pricing">Pricing</a>
+      <a href="story.html">Story</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="#">Sign in</a>
+      <a class="btn btn-primary" href="https://forms.gle/YOUR_FORM_ID" target="_blank" rel="noopener">Start free →</a>
+    </div>
+  </div>
+</nav>
+<main class="page">
+  <div class="wrap">
+    <div class="eyebrow">Legal — Security</div>
+    <h1 class="serif">Security, <em>in detail.</em></h1>
+    <p class="lede">HR assist holds some of the most sensitive data in your company — salaries, bank details, IDs. Here's exactly how we protect it.</p>
+
+    <h2>Architecture</h2>
+    <p>HR assist is multi-tenant, but every row of customer data is isolated by Postgres row-level security. There is no scenario under which workspace A can query workspace B's rows, even with a bug in application code — the database itself enforces the boundary.</p>
+
+    <h2>Encryption</h2>
+    <ul>
+      <li><strong>In transit:</strong> TLS 1.3 everywhere. HSTS with 1-year max-age. No TLS 1.0 / 1.1 accepted.</li>
+      <li><strong>At rest:</strong> AES-256 on all application and backup storage.</li>
+      <li><strong>Sensitive fields:</strong> bank account numbers, PAN, and Aadhaar are additionally encrypted at the field level with per-workspace keys.</li>
+    </ul>
+
+    <h2>Authentication</h2>
+    <ul>
+      <li>Passwords are hashed with Argon2id.</li>
+      <li>Optional two-factor authentication (TOTP) on all plans; enforced org-wide on Canopy.</li>
+      <li>SSO via SAML 2.0 and OIDC on Canopy.</li>
+      <li>SCIM 2.0 provisioning on Canopy.</li>
+    </ul>
+
+    <h2>Access control</h2>
+    <p>Internal access to production follows least privilege. Engineers need a signed ticket and a peer approval to access any customer data, and every access is logged, reviewed weekly, and surfaced to Canopy customers in their audit log on request.</p>
+
+    <h2>Backups &amp; disaster recovery</h2>
+    <p>Full backups daily, incremental backups hourly. Backups are encrypted and stored in a geographically separate region. RPO: 1 hour. RTO: 4 hours. We run DR drills quarterly.</p>
+
+    <h2>Uptime &amp; SLA</h2>
+    <ul>
+      <li><strong>Grove:</strong> 99.9% monthly uptime target. Service credit of 10% for the month if we miss it.</li>
+      <li><strong>Canopy:</strong> up to 99.99% monthly uptime, per contract. Financial credits up to 50%.</li>
+    </ul>
+
+    <h2>Compliance &amp; audits</h2>
+    <ul>
+      <li>SOC 2 Type II — in progress, expected Q3 2026.</li>
+      <li>ISO/IEC 27001 — scoped for 2027.</li>
+      <li>GDPR-compliant processing agreements available on request.</li>
+      <li>India DPDP Act 2023 — compliant as of January 2026.</li>
+    </ul>
+
+    <h2>Responsible disclosure</h2>
+    <p>If you find a vulnerability, please email <a class="inline" href="mailto:security@hrassist.example">security@hrassist.example</a> with details. We acknowledge within 24 hours, fix critical issues within 72 hours, and recognize reporters publicly (with permission). We do not pursue good-faith researchers.</p>
+
+    <div class="meta">Last updated · March 2026</div>
+
+  </div>
+</main>
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot-brand">
+        <div class="logo"><span class="logo-mark"></span>HR assist</div>
+        <p>An HRMS for teams that prefer their software the way they prefer their mornings — quiet, ordered, and entirely their own.</p>
+      </div>
+      <div><h5>Product</h5><a href="index.html#analytics">Analytics</a><a href="index.html#modules">Modules</a><a href="index.html#pricing">Pricing</a><a href="changelog.html">Changelog</a></div>
+      <div><h5>Company</h5><a href="story.html">Story</a><a href="careers.html">Careers</a><a href="press.html">Press</a><a href="contact.html">Contact</a></div>
+      <div><h5>Legal</h5><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="security.html">Security</a><a href="dpa.html">DPA</a></div>
+    </div>
+    <div class="foot-bottom">
+      <div>© 2026 HR assist · All rights reserved</div>
+      <div class="mono">v0.1 · built on modern cloud infra</div>
+    </div>
+  </div>
+</footer>
+<script src="assets/reveal.js"></script>
+</body>
+</html>
