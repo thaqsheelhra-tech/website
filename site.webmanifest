@@ -1,0 +1,14 @@
+{
+  "name": "HR Assist — HRMS, Payroll & People Platform",
+  "short_name": "HR Assist",
+  "description": "Complete HRMS for Indian and global teams — payroll, attendance, leave, recruitment, expenses, timesheets in one calm platform.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4efe6",
+  "theme_color": "#0e0d0b",
+  "lang": "en-IN",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
