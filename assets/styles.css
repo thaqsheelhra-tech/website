@@ -379,3 +379,79 @@ footer{border-top:1px solid var(--line);padding:64px 0 40px;background:var(--ink
 .signup-success h2{font-family:"Fraunces",serif;font-size:36px;font-weight:300;letter-spacing:-.02em;margin-bottom:16px}
 .signup-success p{font-size:16px;color:var(--mute);line-height:1.65;max-width:48ch;margin:0 auto 32px}
 .signup-success a.inline{color:var(--accent-2);border-bottom:1px solid var(--accent)}
+
+/* ============================================================
+   FAQ section (homepage) — added for SEO + UX
+   ============================================================ */
+.faq-section{padding:120px 0 100px;border-top:1px solid rgba(0,0,0,.06)}
+.faq-list{max-width:760px;margin:48px auto 0;display:flex;flex-direction:column;gap:14px}
+.faq-list details{
+  border:1px solid rgba(0,0,0,.1);
+  border-radius:14px;
+  padding:22px 26px;
+  background:rgba(255,255,255,.5);
+  transition:background .2s ease, border-color .2s ease;
+}
+.faq-list details[open]{background:#fff;border-color:rgba(0,0,0,.18)}
+.faq-list summary{
+  cursor:pointer;
+  list-style:none;
+  font-family:"Inter Tight",system-ui,sans-serif;
+  font-size:17px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+}
+.faq-list summary::-webkit-details-marker{display:none}
+.faq-list summary::after{
+  content:"+";
+  font-family:"Fraunces",serif;
+  font-size:22px;
+  line-height:1;
+  font-weight:300;
+  transition:transform .2s ease;
+}
+.faq-list details[open] summary::after{content:"–"}
+.faq-list details p{
+  margin:14px 0 0;
+  font-size:15.5px;
+  line-height:1.65;
+  color:#3d3a35;
+}
+.faq-list details p a{color:inherit;border-bottom:1px solid currentColor}
+
+/* Generic skip-link for a11y (helps Lighthouse / SEO score) */
+.skip-link{
+  position:absolute;left:-9999px;top:0;
+  background:#0e0d0b;color:#f4efe6;padding:10px 14px;border-radius:0 0 8px 0;z-index:9999;
+}
+.skip-link:focus{left:0}
+
+/* Breadcrumb (used on inner pages) */
+.breadcrumb{
+  font-family:"JetBrains Mono",monospace;
+  font-size:12px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#6b6760;
+  margin:24px 0 0;
+}
+.breadcrumb a{color:inherit;border-bottom:1px solid transparent}
+.breadcrumb a:hover{border-bottom-color:currentColor}
+.breadcrumb span[aria-current]{color:#0e0d0b}
+
+/* Comparison table — used on /compare.html */
+.compare-table-wrap{overflow-x:auto;margin:32px 0;border:1px solid rgba(0,0,0,.1);border-radius:14px;background:#fff}
+.compare-table{width:100%;border-collapse:collapse;font-size:14.5px}
+.compare-table th,.compare-table td{padding:14px 18px;text-align:left;border-bottom:1px solid rgba(0,0,0,.06)}
+.compare-table thead th{
+  background:#0e0d0b;color:#f4efe6;
+  font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:500;
+  border-bottom:none;
+}
+.compare-table tbody tr:nth-child(odd) td{background:rgba(0,0,0,.015)}
+.compare-table tbody td:first-child{font-weight:500}
+.compare-table tbody td:nth-child(2){font-weight:600;color:#0e0d0b}
+.compare-table tr:last-child td{border-bottom:none}
+
+/* CTA box used on long-form pages */
+.cta-box h3{font-family:"Fraunces",serif;font-size:26px;font-weight:300;letter-spacing:-.01em}
